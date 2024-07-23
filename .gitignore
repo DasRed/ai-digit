@@ -1,0 +1,27 @@
+/node_modules/
+/coverage
+/test/logs
+
+# OSX
+*.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors
+.idea
+.vscode
+.venv
+*~
+
+# npm config
+/.npmrc
+/test.js
+/.env
+/xunit.xml
+/Marco.md
+*.iml
+
+/data/training/prepared/**/*
+/data/training/raw/**/*
+/config.json5

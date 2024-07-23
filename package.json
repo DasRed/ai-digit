@@ -1,0 +1,63 @@
+{
+    "name": "ai-digit",
+    "version": "0.0.0",
+    "main": "src/index.js",
+    "type": "module",
+    "engines": {
+        "node": ">=22.4.0",
+        "npm": ">=10.8.1"
+    },
+    "scripts": {
+        "start": "node ./src/index.js",
+        "semantic-release": "semantic-release"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DasRed/ai-digit.git"
+    },
+    "dependencies": {
+        "brain.js": "^1.6.1",
+        "command-line-args": "^6.0.0",
+        "command-line-usage": "^7.0.3",
+        "deepmerge": "^4.3.1",
+        "glob": "^11.0.0",
+        "i": "^0.3.7",
+        "json5": "^2.2.3",
+        "npm": "^10.8.2",
+        "pino": "^9.3.1",
+        "pino-pretty": "^11.2.1",
+        "sharp": "^0.33.4"
+    },
+    "devDependencies": {
+        "@semantic-release/commit-analyzer": "^12.0.0",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^10.0.2",
+        "@semantic-release/npm": "^12.0.0",
+        "semantic-release": "^23.0.6",
+        "semantic-release-cli": "^5.4.4"
+    },
+    "release": {
+        "branches": [
+            "main"
+        ],
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            [
+                "@semantic-release/npm",
+                {
+                    "npmPublish": false
+                }
+            ],
+            [
+                "@semantic-release/git",
+                {
+                    "assets": [
+                        "package.json",
+                        "package-lock.json"
+                    ]
+                }
+            ],
+            "@semantic-release/github"
+        ]
+    }
+}

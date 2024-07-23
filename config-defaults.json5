@@ -1,0 +1,215 @@
+{
+    run: {
+        // optional | Defines the input image. can also defined as cli command
+        input: './image.jpg',
+        // optional | Defines the output format. Can be json or text.
+        format: 'json',
+        // optional | Defines the training data file
+        data: './data/training/data.json',
+    },
+    training: {
+        // optional | Defines the input directory
+        input: './data/training/prepared',
+        // optional | Defines the output file with training data.
+        output: './data/training/data.json',
+        // optional | overwrite destination files
+        overwrite: true
+    },
+    prepare: {
+        // optional | Defines the input directory.
+        input: './data/training/raw',
+        output: {
+            directory: './data/training/prepared',
+            image: '{number}/{fileName}-{position}.png',
+            json: '{number}/{fileName}-{position}.json',
+        },
+        // optional | Defines the config file.
+        config: './data/training/raw/config.json5',
+        // optional | Delete files after preparation.
+        deleteSource: false,
+        // optional | overwrite destination files.
+        overwrite: true,
+        // optional | clear the destination directory.
+        clear: true,
+        // defines the actions to perform
+        actions: [
+            /*
+            {
+                type: 'blur',
+                sigma: 0.3..1000,
+            },
+
+            {
+                type: 'clahe',
+                options: {
+                    width: 3,
+                    height: 3,
+                    maxSlope: 3,
+                },
+            },
+
+            {
+                type: 'colorspace',
+                value: 'b-w', // srgb, rgb, cmyk, lab, b-w https://sharp.pixelplumbing.com/api-colour#tocolorspace
+            },
+
+            {
+                type: 'convolve',
+                kernel: {
+                    width: 3,
+                    height: 3,
+                    kernel: [-1, 0, 1, -2, 0, 2, -1, 0, 1],
+                    scale: 1,
+                    offset: 0,
+                },
+            },
+
+            {
+                type: 'crop',
+                // defines, where the coordinates in the image starts
+                // values are:
+                // - left-top
+                // - left-bottom
+                coordinateStart: 'left-top',
+                positions: {
+                    'pos-1-1': {
+                        x1: 114,
+                        y1: 273,
+                        x2: 150,
+                        y2: 342,
+                    },
+                    ...
+                }
+            },
+
+            {
+                type: 'flip',
+            },
+
+            {
+                type: 'flop',
+            },
+
+            {
+                type: 'gamma',
+                gamma: 1.0..3.0,
+                gammaOut: 1.0..3.0,
+            },
+
+            {
+                // alias for "greyscale"
+                type: 'grayscale',
+            },
+
+            {
+                type: 'greyscale',
+            },
+
+            {
+                type: 'median',
+                size: 3,
+            },
+
+            {
+                type: 'linear',
+                a: 0.5, // [0.25, 0.5, 0.75]
+                b: 2, // [150, 100, 50]
+            },
+
+            {
+                type: 'jpeg',
+                options: {quality: 100}
+            },
+
+            {
+                type: 'modulate',
+                brightness: 2,
+                saturation: 2,
+                hue: 2,
+                lightness: 2,
+            },
+
+            {
+                type: 'negate',
+            },
+
+            {
+                type: 'normalise',
+                lower: 1,
+                upper: 99,
+            },
+
+            {
+                // alias for "normalise"
+                type: 'normalize',
+            },
+
+            {
+                type: 'png',
+                options: {colors: 2}
+            },
+
+            {
+                type: 'resize',
+                width: 32,
+                height: 32,
+                options: {
+                    width: 1,
+                    height: 1,
+                    fit: "cover", //cover, contain, fill, inside or outside
+                    position: "centre",
+                    background: {r: 0, g: 0, b: 0, alpha: 1}, // see https://www.npmjs.com/package/color
+                    kernel: "lanczos3",
+                    withoutEnlargement: false,
+                    withoutReduction: false,
+                    fastShrinkOnLoad: true,
+                }
+            },
+
+            {
+                type: 'rotate',
+                angle: 0..360
+            },
+
+            {
+                type: 'save',
+                as: 'json', // json or image
+                file: './data/training/prepared/{number}/{fileName}-{position}.json',
+                overwrite: true,
+            },
+
+            {
+                type: 'sharpen',
+                // optional
+                options: 10
+                // or object
+                options: {
+                    sigma: 0.000001..10,
+                    m1: 0..1000000,
+                    m2: 0..1000000,
+                    x1: 0..1000000,
+                    y2: 0..1000000,
+                    y3: 0..1000000,
+                }
+            },
+            {
+                type: 'threshold',
+                threshold: 0..255
+                options: {
+                    greyscale: true / false
+                    // alternative spelling for greyscale.
+                    grayscale: true / false
+                }
+            },
+
+            {
+                type: 'tint',
+                // see https://www.npmjs.com/package/color
+                options: 'rgb(255, 255, 255)'
+                options: {r: 255, g: 255, b: 255}
+            },
+
+            */
+        ]
+    },
+}
