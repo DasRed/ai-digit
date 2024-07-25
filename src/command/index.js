@@ -1,13 +1,3 @@
-import help from './help.js';
-import prepare from './prepare.js';
-import run from './run.js';
-import training from './training.js';
-import dumpConfig from './dumpConfig.js';
+import loadingDirAsExport from '../lib/loadingDirAsExport.js';
 
-export default {
-    help,
-    prepare,
-    training,
-    run,
-    dumpConfig,
-};
+export default await loadingDirAsExport(import.meta.url);

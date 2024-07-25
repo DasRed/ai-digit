@@ -1,5 +1,5 @@
 import fs from 'fs';
-import sharp from 'sharp';
+import clone from '../../lib/sharp/clone.js';
 import logger from '../../logger.js';
 import saves from './save/index.js';
 
@@ -8,7 +8,7 @@ import saves from './save/index.js';
  * @param {Sharp} image
  * @returns {Promise<Sharp>}
  */
-export default async function (image, {as, file, overwrite = true}, {number, fileName, position}) {
+export default async function (image, {as, file, overwrite = true, options = {}}, {number, fileName, position, meta}) {
     if (saves[as] === undefined) {
         logger.error(`Save type ${type} does not exists`);
         return image;
@@ -22,9 +22,7 @@ export default async function (image, {as, file, overwrite = true}, {number, fil
         return image;
     }
 
-    const buffer = await image.toBuffer({resolveWithObject: true});
-    await saves[as](sharp(buffer.data), file);
-
+    await saves[as](await clone(image), file, options, {number, fileName, position, meta});
     logger.trace(`file ${file} saved.`);
 
     return image;

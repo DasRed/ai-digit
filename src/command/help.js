@@ -14,6 +14,8 @@ export default function () {
                 {name: 'training', summary: 'trains the ai with prepared images and stores the training data'},
                 {name: 'dumpConfig', summary: 'dumps the config to output'},
                 {name: 'help', summary: 'Display this usage guide.',},
+                {name: 'snapshot', summary: 'Creates snapshots from a stream',},
+                {name: 'sortSnapshot', summary: 'sort the snapshots to raw directory',},
             ]
         },
         {

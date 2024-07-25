@@ -1,3 +1,5 @@
+import clone from '../../lib/sharp/clone.js';
+
 /**
  *
  * @param {Sharp} image

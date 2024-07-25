@@ -1,19 +1,24 @@
 import brain from 'brain.js';
 import fs from 'fs';
 import {glob} from 'glob';
-import sharp from 'sharp';
 import logger from '../logger.js';
 
-export default async function ({input, output, overwrite}) {
+export default async function ({input, output, overwrite, ai}) {
     logger.trace({msg: 'Starting training with', input, output});
+
+    // if the destination file exits and overwrite is disabled
+    if (overwrite === false && fs.existsSync(output) === true) {
+        logger.warn(`can not handle file ${output}, because destination file ${output} exists!`);
+        return;
+    }
 
     // find all file, which should be converted
     logger.trace(`reading directory from ${input}`);
-    const files = await glob(`${input}/**/*.{png,jpeg,jpg}`);
+    const files = await glob(`${input}/**/*.json`);
     logger.debug(`found ${files.length} files for training`);
 
-    const data = await files.reduce(async (promise, fileSource) => {
-        const data = await promise;
+    const result = await files.reduce(async (promise, fileSource) => {
+        const result = await promise;
 
         // prepare some information for the file
         const fileName = fileSource.split('/').slice(-1).shift().split('.').slice(-2).shift();
@@ -22,14 +27,28 @@ export default async function ({input, output, overwrite}) {
 
         // create sharp
         logger.trace(`loading image ${fileSource}`);
-        const image = sharp(fileSource);
+        const input = JSON.parse(fs.readFileSync(fileSource, 'utf-8'));
+        result.data.push({input, output: {[number]: 1}});
 
-        const input = await image.raw().toArray();
-        data.push({input: Array.from(input[0]), output: [number]});
-        return data;
-    }, Promise.resolve([]));
+        return result;
+    }, Promise.resolve({data: []}));
 
-    logger.debug(`Writing training data to ${output}`);
-    fs.writeFileSync(output, JSON.stringify(data, null, 4));
-    logger.debug(`Training data written to ${output}`);
+    logger.debug(`Writing training data to ${output.training}`);
+    fs.writeFileSync(output.training, JSON.stringify(result.data, null, 4));
+    logger.debug(`Training data written to ${output.training}`);
+
+    logger.trace(`Training the AI`);
+    const net = new brain.NeuralNetwork(ai.config);
+    net.train(result.data, {
+        ...ai.training,
+        log:            false,
+        logPeriod:      10,
+        callback:       ({iterations, error}) => logger.trace(`AI Training iteration #${iterations} of #${ai.training.iterations} with error ${error}`),
+        callbackPeriod: 1
+    });
+    logger.debug(`AI training finished`);
+
+    logger.debug(`Writing training result to ${output.result}`);
+    fs.writeFileSync(output.result, JSON.stringify(net.toJSON(), null, 4));
+    logger.debug(`Training result written to ${output.result}`);
 }
