@@ -21,7 +21,7 @@ export default async function (image, {directory, onlyRunOnce = true}) {
 }
 
 export async function clear(directory) {
-    const files = await glob(`${directory}/**/*.{png,jpeg,jpg,json,gif}`);
+    const files = await glob(`${directory}/**/*.{png,jpeg,jpg,json,json5,gif}`);
     logger.trace(`${files.length} files found to delete`);
     await Promise.all(files.map((file) => {
         logger.trace(`Deleting file ${file}`);

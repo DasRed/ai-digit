@@ -1,1 +1,3 @@
-export default (config) => console.log(JSON.stringify(config, null, 4));
+import logger from '../logger.js';
+
+export default (config) => logger.info(JSON.stringify(config, null, 4));

@@ -9,9 +9,12 @@ export default function () {
         {
             header:  'Command List',
             content: [
-                {name: 'run', summary: 'runs the ai over an image'},
+                {name: 'test', summary: 'test the ai over with given prepared data'},
+                {name: 'build', summary: 'build docker image and removes old versions'},
                 {name: 'prepare', summary: 'prepares the images from the raw section'},
-                {name: 'training', summary: 'trains the ai with prepared images and stores the training data'},
+                {name: 'training', summary: 'trains the ai with stored training data'},
+                {name: 'createTrainingData', summary: 'Create the training data for the AI'},
+                {name: 'create', summary: 'Alias for createTrainingData'},
                 {name: 'dumpConfig', summary: 'dumps the config to output'},
                 {name: 'help', summary: 'Display this usage guide.',},
                 {name: 'snapshot', summary: 'Creates snapshots from a stream',},

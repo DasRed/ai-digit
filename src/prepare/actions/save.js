@@ -8,13 +8,13 @@ import saves from './save/index.js';
  * @param {Sharp} image
  * @returns {Promise<Sharp>}
  */
-export default async function (image, {as, file, overwrite = true, options = {}}, {number, fileName, position, meta}) {
+export default async function (image, {as, file, overwrite = true, options = {}}, info) {
     if (saves[as] === undefined) {
-        logger.error(`Save type ${type} does not exists`);
+        logger.error(`Save type ${info.type} does not exists`);
         return image;
     }
 
-    file = file.replace('{number}', number).replace('{fileName}', fileName).replace('{position}', position);
+    file = file.replace('{number}', info.number).replace('{fileName}', info.fileName).replace('{position}', info.position);
 
     // if the destination file exits and overwrite is disabled
     if (overwrite === false && fs.existsSync(file) === true) {
@@ -22,7 +22,7 @@ export default async function (image, {as, file, overwrite = true, options = {}}
         return image;
     }
 
-    await saves[as](await clone(image), file, options, {number, fileName, position, meta});
+    await saves[as](await clone(image), file, options, info);
     logger.trace(`file ${file} saved.`);
 
     return image;

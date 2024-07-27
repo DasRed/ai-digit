@@ -1,11 +1,11 @@
 import commandLineArgs from 'command-line-args';
-import command from './command/index.js';
+import commands from './command/index.js';
 import configParser from './configParser.js';
 import logger from './logger.js';
 import version from './version.js';
 
 const options = commandLineArgs([
-    {name: 'command', type: String, defaultOption: true, defaultValue: 'run'},
+    {name: 'commands', type: String, defaultOption: true, defaultValue: 'run', multiple: true},
     {name: 'help', alias: 'h', type: Boolean},
     {name: 'verbose', alias: 'v', type: Boolean, lazyMultiple: true},
 
@@ -21,17 +21,17 @@ if (options.verbose?.length > 1) {
 }
 
 if (options.help) {
-    options.command = 'help'
-}
-
-if (command[options.command] === undefined) {
-    options.command = 'help';
+    options.commands = ['help'];
 }
 
 logger.trace(`AI Digit ${version}`);
-logger.trace(`running command "${options.command}"`);
+await options.commands.reduce(async (promise, command) => {
+    await promise;
+    logger.debug(`running command "${command}"`);
 
-const config = configParser(options);
-await command[options.command](config[options.command] ?? config);
+    const config = configParser(options);
+    await commands[command](config[command] ?? config, config);
+    logger.debug(`command "${command}" finished`);
 
+}, Promise.resolve());
 logger.trace(`finished`);

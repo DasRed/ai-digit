@@ -8,8 +8,8 @@ import logger from '../../logger.js';
  * @param position
  * @returns {Promise<Sharp>}
  */
-export default async function (image, {coordinateStart, positions}, {position}) {
+export default async function (image, {coordinateStart}, {rect}) {
     // create sharp and extract area
     logger.trace(`cropping image`);
-    return image.extract(positions[position]);
+    return image.extract(rect);
 }

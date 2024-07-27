@@ -1,3 +1,4 @@
+/.git
 /node_modules/
 
 # OSX
@@ -9,11 +10,13 @@
 # Editors
 .idea
 .vscode
-.venv
-*~
 
-# npm config
 /test.js
-
+/config.json5
 /README.md
-/.git
+/data
+.venv
+.drone.yml
+.gitignore
+.dockerignore
+Dockerfile
