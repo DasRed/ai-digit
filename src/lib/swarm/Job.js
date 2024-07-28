@@ -6,9 +6,7 @@ import template from './template/swarm.json5.js';
  * @typedef {Object} JobConfig
  * @property {string} id
  * @property {string} name
- * @property {string} rawPath
  * @property {string} basePath
- * @property {string} preparePath
  * @property {string} configFile
  * @property {string} trainingDataFile
  * @property {string} brainDataFile
@@ -50,9 +48,7 @@ export default class Job {
 
     createPathsAndFiles() {
         fs.mkdirSync(this.config.basePath, {recursive: true});
-        fs.mkdirSync(this.config.preparePath, {recursive: true});
         fs.writeFileSync(this.config.configFile, '');
-        fs.writeFileSync(this.config.trainingDataFile, '');
         fs.writeFileSync(this.config.brainDataFile, '');
         fs.writeFileSync(this.config.testOutputFile, '');
         fs.writeFileSync(this.config.logFile, '');
@@ -109,8 +105,17 @@ export default class Job {
     async remove() {
         fs.writeFileSync(this.config.logFile, String(await this.container.logs({stdout: true})));
 
-        await this.container.stop();
-        await this.container.remove();
+        try {
+            await this.container.stop();
+        }
+        catch {
+        }
+
+        try {
+            await this.container.remove();
+        }
+        catch {
+        }
 
         logger.debug(`[${this.config.name}] container removed with name ${this.config.name}`);
         return this;
@@ -126,7 +131,7 @@ export default class Job {
             Labels:     {'ai-digit-id': this.config.id},
             HostConfig: {Binds: this.config.Binds},
             Cmd:        (this.verbose === 0 ? [] : ['-' + 'v'.repeat(this.verbose)])
-                            .concat(['-c', this.config.runtime.configFile, 'prepare', 'training', 'create', 'test'])
+                            .concat(['-c', this.config.runtime.configFile, 'training', 'test'])
         });
         logger.trace(`[${this.config.name}] container created with name ${this.config.name}`);
 

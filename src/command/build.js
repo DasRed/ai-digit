@@ -1,9 +1,28 @@
 import Docker from 'dockerode';
+import fs from 'fs';
 import {glob} from 'glob';
 import logger from '../logger.js';
 
 export default async function (config) {
     logger.trace('Starting docker build');
+
+    const src = await glob('**', {
+        ignore: fs.readFileSync('.dockerignore', 'utf-8').split('\n').reduce((ignore, pattern) => {
+            let line = pattern.trim();
+            if (line.length === 0 || line.startsWith('#')) {
+                return ignore;
+            }
+
+            if (line.startsWith('/')) {
+                line = line.slice(1)
+            }
+            ignore.push(`${line}/**`);
+            ignore.push(line);
+
+            return ignore;
+        }, [])
+    });
+
 
     const docker = new Docker(config.docker);
 
@@ -15,27 +34,10 @@ export default async function (config) {
         logger.trace(`old docker AIDigit image ${id} deleted`);
     }));
 
-    //
-    //await new Promise((resolve, reject) => {
-    //    const child = spawn('docker', ['-H', `tcp://${config.docker.host}:${config.docker.port}`, 'build', '-t', `${config.image}:latest`, process.cwd()]);
-    //    child.stdout.on('data', (data) => logger.trace(String(data)));
-    //    child.stderr.on('data', (data) => logger.error(String(data)));
-    //    child.on('error', (error) => logger.error(error.message));
-    //    child.on('close', (code) => {
-    //        if (code === 0) {
-    //            resolve();
-    //        }
-    //        else {
-    //            reject(`child process exited with code ${code}`);
-    //        }
-    //    });
-    //});
-
-
     logger.trace(`Building new docker image`);
     const stream = await docker.buildImage({
         context: process.cwd(),
-        src:     await glob('**'),
+        src,
     }, {
         t:      config.image,
         labels: JSON.stringify({'ai-digit': ''}),
@@ -51,28 +53,3 @@ export default async function (config) {
 
     logger.info(`Docker build finished`);
 }
-
-
-//
-//
-//async function main() {
-//    let ignorePatterns = await fs.readFile('.dockerignore');
-//
-//    const ignores = [];
-//    for (const pattern of ignorePatterns.toString().split('\n')) {
-//        let line = pattern.trim();
-//        if (line.startsWith('/')) {
-//            line = line.slice(1)
-//        }
-//        if (line.startsWith('#')) {
-//            continue
-//        }
-//        if (line.length == 0) {
-//            continue
-//        }
-//        ignores.push(line);
-//    }
-//
-//    let entries = await glob('**', {ignore: ignores});
-//
-//    var pack = tar.pack(process.cwd(), {entries})

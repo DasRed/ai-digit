@@ -2,7 +2,7 @@ import brain from 'brain.js';
 import fs from 'fs';
 import logger from '../logger.js';
 
-export default async function ({input, output, overwrite, ai}) {
+export default async function ({input, output, overwrite, ai}, fullConfig) {
     logger.trace(`Training the AI`);
 
     // if the destination file exits and overwrite is disabled
@@ -25,6 +25,12 @@ export default async function ({input, output, overwrite, ai}) {
     logger.debug(`AI training finished`);
 
     logger.debug(`Writing training result to ${output}`);
-    fs.writeFileSync(output, JSON.stringify(net.toJSON(), null, 4));
+    fs.writeFileSync(output, JSON.stringify({
+        info: {
+            ai,
+            ...fullConfig.info ?? {}
+        },
+        data: net.toJSON(),
+    }, null, 4));
     logger.debug(`Training result written to ${output}`);
 }

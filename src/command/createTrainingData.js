@@ -23,7 +23,7 @@ export default async function ({input, output, overwrite}) {
         // create sharp
         logger.trace(`loading ${fileSource}`);
         const data = JSON5.parse(fs.readFileSync(fileSource, 'utf-8'));
-        result.push({input: input.array, output: {[data.number]: 1}});
+        result.push({input: data.array, output: {[data.number]: 1}});
 
         return result;
     }, Promise.resolve([]));

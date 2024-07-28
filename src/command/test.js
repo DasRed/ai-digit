@@ -10,13 +10,14 @@ export default async function ({input = undefined, inputs = [], output, data: tr
         inputs.push(input);
     }
 
+    const net       = new brain.NeuralNetwork();
+    const brainData = JSON.parse(fs.readFileSync(trainingData, 'utf-8'));
+    net.fromJSON(brainData.data);
+
     const result = await inputs.reduce(async (promise, input) => {
         const result = await promise;
 
         logger.trace(`Test file ${input}`);
-        const net = new brain.NeuralNetwork();
-        net.fromJSON(JSON.parse(fs.readFileSync(trainingData, 'utf-8')));
-
         const data    = JSON5.parse(fs.readFileSync(input, 'utf-8'))
         const outcome = Object.entries(net.run(data.array))
                               .map(([number, weight]) => ({number, weight}))
@@ -44,7 +45,8 @@ export default async function ({input = undefined, inputs = [], output, data: tr
 
     logger.debug(`Writing result to ${output}`);
     fs.writeFileSync(output, JSON.stringify({
-        csv: result.map((o) => `${o.weight.toLocaleString('de', {maximumFractionDigits: 20, minimumFractionDigits: 0})};${o.success ? '✅' : '❌'}`).join(';'),
+        info:   brainData.info,
+        csv:    result.map((o) => `${o.weight.toLocaleString('de', {maximumFractionDigits: 20, minimumFractionDigits: 0})};${o.success ? '✅' : '❌'}`).join(';'),
         output: result
     }, null, 4));
     logger.info(`Result written to ${output}`);
