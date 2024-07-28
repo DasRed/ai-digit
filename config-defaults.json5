@@ -1,4 +1,11 @@
 {
+
+    test2csv: {
+        overwrite: true,
+        input: './data/**/test.json',
+        output: './data/tests.csv',
+    },
+
     test: {
         inputs: [],
         data: './data/training/brain.json',
@@ -285,7 +292,7 @@
             version: 'v1.41'
         },
         verbose: 2,
-        maxParallel: 10,
+        maxParallel: 20,
         image: 'ai-digit',
         name: 'ai-digit-{id}',
         output: '/System/Volumes/Data/eros/ai-digit/{jobPathName}.csv',

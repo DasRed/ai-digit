@@ -10,6 +10,7 @@ export default function () {
             header:  'Command List',
             content: [
                 {name: 'test', summary: 'test the ai over with given prepared data'},
+                {name: 'test2csv', summary: 'collects multiple test results and combine them to a CSV file',},
                 {name: 'build', summary: 'build docker image and removes old versions'},
                 {name: 'prepare', summary: 'prepares the images from the raw section'},
                 {name: 'training', summary: 'trains the ai with stored training data'},
@@ -19,6 +20,7 @@ export default function () {
                 {name: 'help', summary: 'Display this usage guide.',},
                 {name: 'snapshot', summary: 'Creates snapshots from a stream',},
                 {name: 'sortSnapshot', summary: 'sort the snapshots to raw directory',},
+                {name: 'swarm', summary: 'starts a swarm of AI training',},
             ]
         },
         {

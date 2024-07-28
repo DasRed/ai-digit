@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import {customAlphabet} from 'nanoid'
 import logger from '../../logger.js';
 import Job from './Job.js';
@@ -170,6 +171,17 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                                         },
                                         runtime:          {
                                             info:             {
+                                                id: crypto.createHash('md5').update(JSON.stringify([
+                                                    dimension[0],
+                                                    dimension[1],
+                                                    channel,
+                                                    colorspace,
+                                                    hiddenLayers.join(', '),
+                                                    activation,
+                                                    momentum,
+                                                    errorThresh,
+                                                    learningRate,
+                                                ])).digest('hex'),
                                                 dimension,
                                                 channel,
                                                 colorspace,
