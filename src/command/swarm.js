@@ -11,8 +11,10 @@ import prepare from './prepare.js';
 export default async function (config) {
     logger.trace('Starting swarm');
 
-    fs.rmSync(config.paths.jobs, {recursive: true, force: true});
-    fs.mkdirSync(config.paths.jobs, {recursive: true});
+    if (config.delete === true) {
+        fs.rmSync(config.paths.jobs, {recursive: true, force: true});
+        fs.mkdirSync(config.paths.jobs, {recursive: true});
+    }
 
     const docker = new Docker(config.docker);
 
@@ -32,7 +34,15 @@ export default async function (config) {
     }, Promise.resolve());
 
     /** @var {Job[]} */
-    const jobsToRun = Object.values(jobs).map((job) => job.createPathsAndFiles());
+    const jobsToRun = Object.values(jobs).filter((job) => {
+        if (config.overwrite === false && job.isTestDone() === true) {
+            return false;
+        }
+        job.createPathsAndFiles();
+
+        return true;
+    });
+    const maxCount = jobsToRun.length;
 
     /** @var {Job[]} */
     let jobsCurrentlyRunning = [];
@@ -55,7 +65,7 @@ export default async function (config) {
         )
         jobsCurrentlyRunning = jobsCurrentlyRunning.concat(jobsStarted);
 
-        logger.debug(`#${jobsCurrentlyRunning.length} Jobs running. #${jobsToRun.length} Jobs waiting for running. Waiting...`);
+        logger.debug(`#${jobsCurrentlyRunning.length} Jobs running. #${jobsToRun.length} of ${maxCount} Jobs are left. Waiting...`);
         await wait(1000);
     } while (jobsToRun.length > 0);
 

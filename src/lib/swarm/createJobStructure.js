@@ -138,7 +138,7 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                             for (const errorThresh of config.errorThreshs) {
                                 for (const learningRate of config.learningRates) {
                                     const id      = nanoid();
-                                    const subPath = `${id.substring(0, 1)}/${id.substring(1, 2)}/${id}`;
+                                    const subPath = `${prepareSubPath}-hiddenLayers-${JSON.stringify(hiddenLayers)}-activation-${activation}-momentum-${momentum}-errorThresh-${errorThresh}-learningRate-${learningRate}`;
                                     jobs[id]      = new Job(docker, dockerImage, verbose, {
                                         id,
                                         name:             nameTemplate.replace('{id}', id),
@@ -148,26 +148,34 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                                         brainDataFile:    `${paths.jobs}/${subPath}/brain.json`,
                                         testOutputFile:   `${paths.jobs}/${subPath}/test.json`,
                                         logFile:          `${paths.jobs}/${subPath}/log.log`,
-                                        Binds:            [
+                                        binds:            [
                                             `${mounts.raw}:${mounts.src}/raw`,
                                             `${mounts.prepared}/${prepareSubPath}:${mounts.src}/prepared`,
-                                            `${mounts.jobs}/${subPath}:${mounts.src}/${id}`,
+                                            `${mounts.jobs}/${subPath}:${mounts.src}/${subPath}`,
                                         ],
+                                        labels: {
+                                            'ai-digit-id': id,
+                                            'ai-digit-hiddenLayers': JSON.stringify(hiddenLayers),
+                                            'ai-digit-activation': activation,
+                                            'ai-digit-momentum': momentum,
+                                            'ai-digit-errorThresh': errorThresh,
+                                            'ai-digit-learningRate': learningRate,
+                                        },
                                         runtime:          {
                                             info: {
                                                 dimension,
                                                 channel,
                                                 colorspace,
                                             },
-                                            configFile:       `${mounts.src}/${id}/config.json5`,
+                                            configFile:       `${mounts.src}/${subPath}/config.json5`,
                                             trainingDataFile: `${mounts.src}/prepared/training.json`,
-                                            brainDataFile:    `${mounts.src}/${id}/brain.json`,
+                                            brainDataFile:    `${mounts.src}/${subPath}/brain.json`,
                                             hiddenLayers,
                                             activation,
                                             errorThresh,
                                             learningRate,
                                             momentum,
-                                            testOutputFile:   `${mounts.src}/${id}/test.json`,
+                                            testOutputFile:   `${mounts.src}/${subPath}/test.json`,
                                             testFiles:        config.testFiles.map((testFile) => `${mounts.src}/prepared/${testFile}`)
                                         }
                                     });

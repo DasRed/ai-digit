@@ -12,7 +12,8 @@ import template from './template/swarm.json5.js';
  * @property {string} brainDataFile
  * @property {string} testOutputFile
  * @property {string} logFile
- * @property {string[]} Binds
+ * @property {string[]} binds
+ * @property {Object} labels
  * @property {Object} runtime
  * @property {string} runtime.configFile
  * @property {string} runtime.rawPath
@@ -70,6 +71,14 @@ export default class Job {
         return inspect?.State?.ExitCode ?? 0;
     }
 
+    getTestResult() {
+        if (this.isTestDone() === false) {
+            return undefined;
+        }
+
+        return JSON.parse(fs.readFileSync(this.config.testOutputFile, 'utf-8'))
+    }
+
     /**
      * @returns {Promise<boolean>}
      */
@@ -97,6 +106,15 @@ export default class Job {
         catch {
             return false;
         }
+    }
+
+    isTestDone() {
+        if (fs.existsSync(this.config.testOutputFile) === false) {
+            return false;
+        }
+        const stats = fs.statSync(this.config.testOutputFile);
+
+        return stats.size !== 0;
     }
 
     /**
@@ -128,8 +146,8 @@ export default class Job {
         /** @var {Container} */
         this.container = await this.docker.createContainer({
             Image:      this.dockerImage,
-            Labels:     {'ai-digit-id': this.config.id},
-            HostConfig: {Binds: this.config.Binds},
+            Labels:     this.config.labels,
+            HostConfig: {Binds: this.config.binds},
             Cmd:        (this.verbose === 0 ? [] : ['-' + 'v'.repeat(this.verbose)])
                             .concat(['-c', this.config.runtime.configFile, 'training', 'test'])
         });

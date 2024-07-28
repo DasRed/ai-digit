@@ -268,7 +268,17 @@
             */
         ]
     },
+    build: {
+        docker: {
+            host: '192.168.178.3',
+            port: 2375,
+            version: 'v1.41'
+        },
+        image: 'ai-digit',
+    },
     swarm: {
+        delete: false,
+        overwrite: false,
         docker: {
             host: '192.168.178.3',
             port: 2375,
@@ -278,6 +288,7 @@
         maxParallel: 10,
         image: 'ai-digit',
         name: 'ai-digit-{id}',
+        output: '/System/Volumes/Data/eros/ai-digit/output.csv',
         paths:  {
             raw: './data/raw',
             rawTemplate: './data/raw/{number}/{position}',

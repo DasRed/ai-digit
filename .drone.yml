@@ -1,7 +1,0 @@
-kind: template
-load: nodeProject.jsonnet
-data:
-    node: 21.7.1
-    port: 7890
-    environmentVariables: '[]'
-    deployToHost: 192.168.178.5
