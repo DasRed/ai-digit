@@ -21,8 +21,9 @@ export default async function (config) {
     // prepare
     /** @var {Object.<String, Job>} */
     const {prepares, jobs} = createJobStructure(docker, config);
+    const maxCount         = jobs.length;
 
-    await Object.values(prepares).reduce(async (promise, prepareConfig) => {
+    await prepares.reduce(async (promise, prepareConfig) => {
         await promise;
 
         if (fs.existsSync(prepareConfig.path) === false) {
@@ -34,7 +35,7 @@ export default async function (config) {
     }, Promise.resolve());
 
     /** @var {Job[]} */
-    const jobsToRun = Object.values(jobs).filter((job) => {
+    const jobsToRun = jobs.filter((job) => {
         if (config.overwrite === false && job.isTestDone() === true) {
             return false;
         }
@@ -42,7 +43,6 @@ export default async function (config) {
 
         return true;
     });
-    const maxCount = jobsToRun.length;
 
     /** @var {Job[]} */
     let jobsCurrentlyRunning = [];

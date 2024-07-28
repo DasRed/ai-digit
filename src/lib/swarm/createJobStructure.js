@@ -27,8 +27,8 @@ const nanoid = customAlphabet('1234567890abcdef', 20);
  * @param config.testFiles
  */
 export default function createJobStructure(docker, {verbose, image: dockerImage, name: nameTemplate, paths, mounts, config}) {
-    const jobs     = {};
-    const prepares = {};
+    const jobs     = [];
+    const prepares = [];
 
     logger.trace(`Starting to create the job definition`);
 
@@ -41,13 +41,13 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
             }
 
             for (const colorspace of config.colorspaces) {
-                const prepareId     = nanoid();
+                const prepareId      = nanoid();
                 const prepareSubPath = `dimension-${dimension[0]}x${dimension[1]}-channel-${JSON.stringify(channel).replaceAll('"', '')}-colorspace-${JSON.stringify(colorspace).replaceAll('"', '')}`;
-                const pathPrepared  = `${paths.prepared}/${prepareSubPath}`;
-                prepares[prepareId] = {
-                    id:     prepareId,
-                    path:   pathPrepared,
-                    prepare: {
+                const pathPrepared   = `${paths.prepared}/${prepareSubPath}`;
+                prepares.push({
+                    id:                 prepareId,
+                    path:               pathPrepared,
+                    prepare:            {
                         input:     paths.rawTemplate,
                         positions: {
                             'pos-1-1': {
@@ -126,11 +126,11 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                         ),
                     },
                     createTrainingData: {
-                        input: pathPrepared,
-                        output: `${pathPrepared}/training.json`,
+                        input:     pathPrepared,
+                        output:    `${pathPrepared}/training.json`,
                         overwrite: false,
                     },
-                };
+                });
 
                 for (const hiddenLayers of config.hiddenLayers) {
                     for (const activation of config.activations) {
@@ -139,7 +139,7 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                                 for (const learningRate of config.learningRates) {
                                     const id      = nanoid();
                                     const subPath = `${prepareSubPath}-hiddenLayers-${JSON.stringify(hiddenLayers)}-activation-${activation}-momentum-${momentum}-errorThresh-${errorThresh}-learningRate-${learningRate}`;
-                                    jobs[id]      = new Job(docker, dockerImage, verbose, {
+                                    jobs.push(new Job(docker, dockerImage, verbose, {
                                         id,
                                         name:             nameTemplate.replace('{id}', id),
                                         basePath:         `${paths.jobs}/${subPath}`,
@@ -153,16 +153,16 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                                             `${mounts.prepared}/${prepareSubPath}:${mounts.src}/prepared`,
                                             `${mounts.jobs}/${subPath}:${mounts.src}/${subPath}`,
                                         ],
-                                        labels: {
-                                            'ai-digit-id': id,
+                                        labels:           {
+                                            'ai-digit-id':           id,
                                             'ai-digit-hiddenLayers': JSON.stringify(hiddenLayers),
-                                            'ai-digit-activation': activation,
-                                            'ai-digit-momentum': momentum,
-                                            'ai-digit-errorThresh': errorThresh,
+                                            'ai-digit-activation':   activation,
+                                            'ai-digit-momentum':     momentum,
+                                            'ai-digit-errorThresh':  errorThresh,
                                             'ai-digit-learningRate': learningRate,
                                         },
                                         runtime:          {
-                                            info: {
+                                            info:             {
                                                 dimension,
                                                 channel,
                                                 colorspace,
@@ -178,7 +178,7 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                                             testOutputFile:   `${mounts.src}/${subPath}/test.json`,
                                             testFiles:        config.testFiles.map((testFile) => `${mounts.src}/prepared/${testFile}`)
                                         }
-                                    });
+                                    }));
                                 }
                             }
                         }
@@ -188,6 +188,6 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
         }
     }
 
-    logger.trace(`Defined #${Object.values(jobs).length} jobs`);
+    logger.trace(`Defined #${jobs.length} jobs`);
     return {prepares, jobs};
 }
