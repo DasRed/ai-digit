@@ -22,5 +22,5 @@
 /Marco.md
 *.iml
 
-/data/**/*
-/config.json5
+/data/training/**/*
+/data/snapshot/**/*
