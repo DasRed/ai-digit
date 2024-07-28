@@ -23,10 +23,9 @@ export default async function (config) {
         }, [])
     });
 
-
     const docker = new Docker(config.docker);
 
-    const images = await docker.listImages({filters: JSON.stringify({label: ['ai-digit']})});
+    const images = await docker.listImages({filters: JSON.stringify({label: [config.image]})});
     await Promise.all(images.map(async ({Id: id}) => {
         logger.trace(`deleting old docker AIDigit image ${id}`);
         const image = await docker.getImage(id);
@@ -40,7 +39,7 @@ export default async function (config) {
         src,
     }, {
         t:      config.image,
-        labels: JSON.stringify({'ai-digit': ''}),
+        labels: JSON.stringify({[config.image]: ''}),
     });
 
     await new Promise((resolve, reject) => {

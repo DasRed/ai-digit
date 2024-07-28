@@ -76,7 +76,7 @@ export default class Job {
             return undefined;
         }
 
-        return JSON.parse(fs.readFileSync(this.config.testOutputFile, 'utf-8'))
+        return JSON.parse(fs.readFileSync(this.config.testOutputFile, 'utf-8'));
     }
 
     /**

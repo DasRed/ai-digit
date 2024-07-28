@@ -16,6 +16,7 @@ const nanoid = customAlphabet('1234567890abcdef', 20);
  * @param mounts.jobs
  * @param mounts.src
  * @param {Object} config
+ * @param jobPathName
  * @param config.dimensions
  * @param config.channels
  * @param config.colorspaces
@@ -26,11 +27,14 @@ const nanoid = customAlphabet('1234567890abcdef', 20);
  * @param config.learningRates
  * @param config.testFiles
  */
-export default function createJobStructure(docker, {verbose, image: dockerImage, name: nameTemplate, paths, mounts, config}) {
+export default function createJobStructure(docker, {verbose, image: dockerImage, name: nameTemplate, paths, mounts, config, jobPathName}) {
     const jobs     = [];
     const prepares = [];
 
     logger.trace(`Starting to create the job definition`);
+
+    paths.jobs  = paths.jobs.replace('{jobPathName}', jobPathName);
+    mounts.jobs = mounts.jobs.replace('{jobPathName}', jobPathName);
 
     // config structure
     for (const dimension of config.dimensions) {
@@ -154,12 +158,15 @@ export default function createJobStructure(docker, {verbose, image: dockerImage,
                                             `${mounts.jobs}/${subPath}:${mounts.src}/${subPath}`,
                                         ],
                                         labels:           {
-                                            'ai-digit-id':           id,
+                                            'ai-digit-id':           String(id),
+                                            'ai-digit-dimension':    JSON.stringify(dimension),
+                                            'ai-digit-channel':      String(channel),
+                                            'ai-digit-colorspace':   String(colorspace),
                                             'ai-digit-hiddenLayers': JSON.stringify(hiddenLayers),
-                                            'ai-digit-activation':   activation,
-                                            'ai-digit-momentum':     momentum,
-                                            'ai-digit-errorThresh':  errorThresh,
-                                            'ai-digit-learningRate': learningRate,
+                                            'ai-digit-activation':   String(activation),
+                                            'ai-digit-momentum':     String(momentum),
+                                            'ai-digit-errorThresh':  String(errorThresh),
+                                            'ai-digit-learningRate': String(learningRate),
                                         },
                                         runtime:          {
                                             info:             {

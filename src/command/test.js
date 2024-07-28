@@ -46,7 +46,7 @@ export default async function ({input = undefined, inputs = [], output, data: tr
     logger.debug(`Writing result to ${output}`);
     fs.writeFileSync(output, JSON.stringify({
         info:   brainData.info,
-        csv:    result.map((o) => `${o.weight.toLocaleString('de', {maximumFractionDigits: 20, minimumFractionDigits: 0})};${o.success ? '✅' : '❌'}`).join(';'),
+        csv:    result.map((o) => `${o.weight.toLocaleString('de', {maximumFractionDigits: 20, minimumFractionDigits: 0})};${o.success ? 'Y' : 'N'}`).join(';'),
         output: result
     }, null, 4));
     logger.info(`Result written to ${output}`);
