@@ -292,10 +292,9 @@
             version: 'v1.41'
         },
         verbose: 2,
-        maxParallel: 20,
+        maxParallel: 10,
         image: 'ai-digit',
         name: 'ai-digit-{id}',
-        output: '/System/Volumes/Data/eros/ai-digit/{jobPathName}.csv',
         jobPathName: 'jobs',
         paths: {
             raw: './data/raw',
@@ -310,12 +309,12 @@
             src: '/ai-digit'
         },
         config: {
-            dimensions: [],
             // [[16, 27], [32, 54], [64, 108], [64, 64],],
-            channels: [],
+            dimensions: [],
             //[0, 1, 2, null],
-            colorspaces: [],
+            channels: [],
             // ['srgb', 'b-w', null],
+            colorspaces: [],
             hiddenLayers: [
                 //                [512, 256, 128], [512, 256, 128, 64], [512, 256, 128, 64, 32],
                 //                     [256, 128],      [256, 128, 64],      [256, 128, 64, 32],
@@ -323,14 +322,14 @@
                 //                                                                     [64, 32],
                 //                [32, 64], [32, 64, 128], [32, 64, 128, 512],
             ],
-            activations: [],
             // ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
-            momentums: [],
+            activations: [],
             //[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-            errorThreshs: [],
+            momentums: [],
             // [0.5, 0.1, 0.05, 0.01, 0.005, 0.001],
-            learningRates: [],
+            errorThreshs: [],
             // [0.5, 0.1, 0.05, 0.01, 0.005, 0.001,],
+            learningRates: [],
             testFiles: []
         },
     }

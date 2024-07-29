@@ -9,7 +9,7 @@ const BLOCKS = [
 /**
  * @param {*[]} array
  */
-export default (array, info) => `
+export default (array, info, invert) => `
 {
     ${info.meta.channels !== 1 ? '' : `
     /*
@@ -18,6 +18,10 @@ export default (array, info) => `
             const realChannels = array.length / (info.meta.width * info.meta.height);
             if (index % realChannels !== 0) {
                 return acc;
+            }
+
+            if (invert === false) {
+                value = 1 - value; 
             }
             
             const block = BLOCKS.find(({from, to}) => from <= value && value <= to);

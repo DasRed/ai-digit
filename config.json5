@@ -403,36 +403,25 @@
                 directory: './data/prepared',
                 onlyRunOnce: true,
             },
-//            'greyscale',
             {type:  'sharpen', options: 10},
+            {type:  'extractChannel', channel: 'red'},
+            {type:  'threshold', threshold: 120},
             'crop',
-//            {type:  'threshold', threshold: 150},
-            {type:  'sharpen', options: 10},
-            {type:  'linear', a: 1.5, b: 0},
-
-
-//            {type:  'colorspace', value: 'b-w'},
-//            {type:  'resize', width: 64, height: 108, options: {fit: 'fill', background:  {r: 255, g: 255, b: 255, alpha: 1}}},
-//            {type:  'png', options: {colors: 2, force: true}},
-//            {type:  'blackWhite', format: 'png', options: {colors: 2, autoCrop: true, force: true}},
-//            {type:  'resize', width: 64, height: 108, options: {fit: 'fill', background:  {r: 255, g: 255, b: 255, alpha: 1}}},
-//            {type:  'gif', options: {colors: 2, force: true}},
-
-
-//            {type:  'resize', width: 64, height: 108, options: {fit: 'fill', background:  {r: 255, g: 255, b: 255, alpha: 1}}},
-            {type:  'resize', width: 32, height: 54, options: {fit: 'fill', background:  {r: 255, g: 255, b: 255, alpha: 1}}},
-            {type:  'extractChannel', channel: 0},
-            {type:  'png', options: {force: true}},
+            {type:  'blackWhite', format: 'png', options: {colors: 2, autoCrop: true, force: true}},
+            {type:  'resize', width: 16, height: 16, options: {fit: 'fill', background:  {r: 255, g: 255, b: 255}}},
+            {type:  'png', options: {colors: 2, force: true}},
+            {type:  'colorspace', value: 'b-w'},
             {
                 type: 'save',
                 as: 'image',
-                file: './data/prepared/{number}/{fileName}-{position}.png',
+                file: './data/prepared/{number}-{fileName}-{position}.png',
             },
+            {type:  'colorspace', value: 'b-w'},
             {
                 type: 'save',
                 as: 'json5',
-                file: './data/prepared/{number}/{fileName}-{position}.json5',
-//                options: {colorspace: 'b-w'},
+                file: './data/prepared/{number}-{fileName}-{position}.json5',
+                options: {colorspace: 'b-w', invert: false}
             },
         ],
     },
@@ -487,15 +476,15 @@
     swarm_2024_07_27: {
         image: 'ai-digit',
         name: 'ai-digit-{id}',
-        output: '/System/Volumes/Data/eros/ai-digit/output-2024.07.27.csv',
         config: {
-            dimensions: [[16, 27], [32, 54], [64, 64],],
+            dimensions: [[16, 27], [32, 54], [64, 64]],
             channels: [0, null],
             colorspaces: ['srgb', 'b-w', null],
             hiddenLayers: [
                 [512, 256, 128], [512, 256, 128, 64],
             ],
             activations: ['sigmoid'],
+            iterations: [2000],
             momentums: [0.1],
             errorThreshs: [0.1, 0.01, 0.001],
             learningRates: [0.1, 0.01, 0.001,],
@@ -510,6 +499,31 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
             ]
         }
     },
@@ -523,6 +537,7 @@
             colorspaces: ['srgb'],
             hiddenLayers: [[512, 256, 128, 64]],
             activations: ['sigmoid'],
+            iterations: [2000],
             momentums: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
             errorThreshs: [0.1],
             learningRates: [0.0001],
@@ -537,7 +552,32 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
-            ]
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
+             ]
         }
     },
     swarm_2024_07_28_momentum_2: {
@@ -550,6 +590,7 @@
             colorspaces: ['srgb', 'b-w', null],
             hiddenLayers: [[512, 256, 128, 64]],
             activations: ['sigmoid'],
+            iterations: [2000],
             momentums: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
             errorThreshs: [0.1],
             learningRates: [0.001],
@@ -564,6 +605,31 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
             ]
         }
     },
@@ -577,6 +643,7 @@
             colorspaces: ['srgb'],
             hiddenLayers: [[512, 256, 128, 64]],
             activations: ['relu', 'leaky-relu', 'tanh'],
+            iterations: [2000],
             momentums: [0.3],
             errorThreshs: [0.1],
             learningRates: [0.0001],
@@ -591,6 +658,31 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
             ]
         }
     },
@@ -607,6 +699,7 @@
                 [1024, 512, 256, 128], [1024, 512, 256, 128, 64], [1024, 512, 256, 128, 64, 32], [1024, 512, 256, 128, 64, 32, 16]
             ],
             activations: ['sigmoid'],
+            iterations: [2000],
             momentums: [0.3],
             errorThreshs: [0.1],
             learningRates: [0.0001],
@@ -621,6 +714,31 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
             ]
         }
     },
@@ -634,6 +752,7 @@
             colorspaces: ['srgb'],
             hiddenLayers: [[512, 256, 128, 64]],
             activations: ['sigmoid'],
+            iterations: [2000],
             momentums: [0.2, 0.35, 0.8],
             errorThreshs: [0.1],
             learningRates: [0.0001],
@@ -648,19 +767,46 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
             ]
         }
     },
-    swarm: {
+    swarm_2024_07_28_small_images: {
         image: 'ai-digit-2024-07-28-small-images',
         name: 'ai-digit-2024-07-28-small-images-{id}',
         jobPathName: 'jobs-2024.07.28-small-images',
+        maxParallel: 20,
         config: {
-            dimensions: [[4, 7],[8, 14]],
+            dimensions: [[4, 7], [8, 14]],
             channels: [0, 1, 2, null],
             colorspaces: ['srgb', 'b-w', null, 'lab', 'cymk', 'rgb16', 'grey16', 'hsv'],
             hiddenLayers: [[512, 256, 128, 64], [1024, 512, 256, 128, 64, 32, 16]],
             activations: ['sigmoid'],
+            iterations: [2000],
             momentums: [0.2, 0.3, 0.35, 0.8],
             errorThreshs: [0.1],
             learningRates: [0.0001, 0.00001],
@@ -675,6 +821,189 @@
                 '7-485-pos-1-3.json5',
                 '8-1721815111887-1-pos-1-6.json5',
                 '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
+            ]
+        }
+    },
+    swarm_2024_07_28_activations_tanh: {
+        image: 'ai-digit-2024-07-28-activations_tanh',
+        name: 'ai-digit-2024-07-28-activations_tanh-{id}',
+        jobPathName: 'jobs-2024.07.28-activations_tanh',
+        maxParallel: 4,
+        config: {
+            dimensions: [[8, 14], [16, 27], [32, 54]],
+            channels: [0, null],
+            colorspaces: ['srgb', 'b-w', null],
+            hiddenLayers: [[512, 256, 128, 64]],
+            activations: ['tanh'],
+            iterations: [2000],
+            momentums: [0.2, 0.3, 0.8],
+            errorThreshs: [0.1],
+            learningRates: [0.1],
+            testFiles: [
+                '0-485-pos-1-1.json5',
+                '1-485-pos-1-2.json5',
+                '2-564-pos-1-5.json5',
+                '3-1721815111887-1-pos-1-4.json5',
+                '4-564-pos-1-6.json5',
+                '5-506-pos-2-2.json5',
+                '6-20240724081027-pos-1-6.json5',
+                '7-485-pos-1-3.json5',
+                '8-1721815111887-1-pos-1-6.json5',
+                '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {
+                    type:        'clear',
+                    directory:   '{pathPrepared}',
+                    onlyRunOnce: true,
+                },
+                {type: 'sharpen', options: 10},
+                'crop',
+                {type: 'sharpen', options: 10},
+                {type: 'linear', a: 1.5, b: 0},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255, alpha: 1}}},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'png', options: {force: true}},
+                {
+                    type: 'save',
+                    as:   'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {
+                    type: 'save',
+                    as:   'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                }
+            ]
+        }
+    },
+    swarm_2024_07_29_fagerbeg: {
+        image: 'ai-digit-2024-07-29-fagerbeg',
+        name: 'ai-digit-2024-07-29-fagerbeg-{id}',
+        jobPathName: 'jobs-2024.07.29-fagerbeg',
+        maxParallel: 4,
+        config: {
+            dimensions: [[16, 16]],
+            channels: ['red'],
+            colorspaces: ['b-w'],
+            blackWhites: [true],
+            hiddenLayers: [[128, 128], [512, 256, 128, 64]],
+            activations: ['sigmoid'],
+            iterations: [2000],
+            momentums: [0.1],
+            errorThreshs: [0.1, 0.0001],
+            learningRates: [0.3, 0.01],
+            testFiles: [
+                '0-485-pos-1-1.json5',
+                '1-485-pos-1-2.json5',
+                '2-564-pos-1-5.json5',
+                '3-1721815111887-1-pos-1-4.json5',
+                '4-564-pos-1-6.json5',
+                '5-506-pos-2-2.json5',
+                '6-20240724081027-pos-1-6.json5',
+                '7-485-pos-1-3.json5',
+                '8-1721815111887-1-pos-1-6.json5',
+                '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {type: 'sharpen', options: 10},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'threshold', threshold: 120},
+                'crop',
+                {type: 'blackWhite', format: 'png', options: {colors: 2, autoCrop: true, force: true}, test: 'blackWhite'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255}}},
+                {type: 'png', options: {colors: 2, force: true}},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                    options: {colorspace: 'b-w', invert: false}
+                }
+            ]
+        }
+    },
+    swarm: {
+        image: 'ai-digit-2024-07-29-fagerbeg-activations',
+        name: 'ai-digit-2024-07-29-fagerbeg-activations-{id}',
+        jobPathName: 'jobs-2024.07.29-fagerbeg-activations',
+        maxParallel: 4,
+        config: {
+            dimensions: [[16, 16]],
+            channels: ['red'],
+            colorspaces: ['b-w'],
+            blackWhites: [true],
+            hiddenLayers: [[128, 128]],
+            activations: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
+            momentums: [0.1],
+            errorThreshs: [0.0001],
+            learningRates: [0.3],
+            iterations: [200],
+            testFiles: [
+                '0-485-pos-1-1.json5',
+                '1-485-pos-1-2.json5',
+                '2-564-pos-1-5.json5',
+                '3-1721815111887-1-pos-1-4.json5',
+                '4-564-pos-1-6.json5',
+                '5-506-pos-2-2.json5',
+                '6-20240724081027-pos-1-6.json5',
+                '7-485-pos-1-3.json5',
+                '8-1721815111887-1-pos-1-6.json5',
+                '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {type: 'sharpen', options: 10},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'threshold', threshold: 120},
+                'crop',
+                {type: 'blackWhite', format: 'png', options: {colors: 2, autoCrop: true, force: true}, test: 'blackWhite'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255}}},
+                {type: 'png', options: {colors: 2, force: true}},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                    options: {colorspace: 'b-w', invert: false}
+                }
             ]
         }
     }

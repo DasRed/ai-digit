@@ -17,16 +17,14 @@ export default async function ({input, output, overwrite}) {
     const files = await glob(`${input}/**/*.json5`);
     logger.debug(`found ${files.length} files for training`);
 
-    const result = await files.reduce(async (promise, fileSource) => {
-        const result = await promise;
-
+    const result = files.reduce((result, fileSource) => {
         // create sharp
         logger.trace(`loading ${fileSource}`);
         const data = JSON5.parse(fs.readFileSync(fileSource, 'utf-8'));
         result.push({input: data.array, output: {[data.number]: 1}});
 
         return result;
-    }, Promise.resolve([]));
+    }, []);
 
     logger.debug(`Writing training data to ${output}`);
     fs.writeFileSync(output, JSON.stringify(result, null, 4));

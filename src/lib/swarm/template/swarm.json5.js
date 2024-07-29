@@ -6,7 +6,7 @@ export default ({
                     info,
                     trainingDataFile, brainDataFile,
                     hiddenLayers, activation,
-                    errorThresh, learningRate, momentum,
+                    iteration, errorThresh, learningRate, momentum,
                     testOutputFile,
                     testFiles
                 }) => {
@@ -24,7 +24,7 @@ export default ({
                     activation: '${activation}',
                 },
                 training: {
-                    iterations: 2000,
+                    iterations: ${iteration},
                     errorThresh: ${errorThresh},
                     learningRate: ${learningRate},
                     momentum: ${momentum},

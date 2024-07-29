@@ -10,15 +10,19 @@ import template from './template/json5.js';
  * @param colorspace
  * @returns {Promise<boolean>}
  */
-export default async function (image, file, {colorspace = 'srgb'}, info) {
+export default async function (image, file, {colorspace = 'srgb', invert = true}, info) {
     const imageClone = await clone(image);
     const array      = await imageClone.toColorspace(colorspace).raw().toArray();
     let data         = Array.from(array[0]);
-    const max        = Math.max(...data);
+    const min        = Math.min(...data);
+    const max        = Math.max(...data) - min;
 
-    data = data.map((value) => 1 - value / max);
+    data = data.map((value) => {
+        value = (value - min) / max;
+        return invert ? 1 - value : value;
+    });
 
-    fs.writeFileSync(file, template(data, info));
+    fs.writeFileSync(file, template(data, info, invert));
 
     return true;
 }
