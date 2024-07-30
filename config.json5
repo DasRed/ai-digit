@@ -955,7 +955,7 @@
             ]
         }
     },
-    swarm: {
+    swarm_2024_07_29_fagerbeg_activations: {
         image: 'ai-digit-2024-07-29-fagerbeg-activations',
         name: 'ai-digit-2024-07-29-fagerbeg-activations-{id}',
         jobPathName: 'jobs-2024.07.29-fagerbeg-activations',
@@ -971,6 +971,110 @@
             errorThreshs: [0.0001],
             learningRates: [0.3],
             iterations: [200],
+            testFiles: [
+                '0-485-pos-1-1.json5',
+                '1-485-pos-1-2.json5',
+                '2-564-pos-1-5.json5',
+                '3-1721815111887-1-pos-1-4.json5',
+                '4-564-pos-1-6.json5',
+                '5-506-pos-2-2.json5',
+                '6-20240724081027-pos-1-6.json5',
+                '7-485-pos-1-3.json5',
+                '8-1721815111887-1-pos-1-6.json5',
+                '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {type: 'sharpen', options: 10},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'threshold', threshold: 120},
+                'crop',
+                {type: 'blackWhite', format: 'png', options: {colors: 2, autoCrop: true, force: true}, test: 'blackWhite'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255}}},
+                {type: 'png', options: {colors: 2, force: true}},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                    options: {colorspace: 'b-w', invert: false}
+                }
+            ]
+        }
+    },
+    swarm_2024_07_29_fagerbeg_tanh: {
+        image: 'ai-digit-2024-07-29-fagerbeg-tanh',
+        name: 'ai-digit-2024-07-29-fagerbeg-tanh-{id}',
+        jobPathName: 'jobs-2024.07.29-fagerbeg-tanh',
+        maxParallel: 4,
+        config: {
+            dimensions: [[16, 16]],
+            channels: ['red'],
+            colorspaces: ['b-w'],
+            blackWhites: [true],
+            hiddenLayers: [[128, 128], [512, 256, 128, 64]],
+            activations: ['tanh'],
+            momentums: [0.1],
+            errorThreshs: [0.0001, 0.001],
+            learningRates: [0.3, 0.01, 0.001],
+            iterations: [500],
+            testFiles: [
+                '0-485-pos-1-1.json5',
+                '1-485-pos-1-2.json5',
+                '2-564-pos-1-5.json5',
+                '3-1721815111887-1-pos-1-4.json5',
+                '4-564-pos-1-6.json5',
+                '5-506-pos-2-2.json5',
+                '6-20240724081027-pos-1-6.json5',
+                '7-485-pos-1-3.json5',
+                '8-1721815111887-1-pos-1-6.json5',
+                '9-1721815111887-105-pos-1-6.json5'
+            ],
+            actions: [
+                {type: 'sharpen', options: 10},
+                {type: 'extractChannel', channel: '{channelValue}', test: 'channel'},
+                {type: 'threshold', threshold: 120},
+                'crop',
+                {type: 'blackWhite', format: 'png', options: {colors: 2, autoCrop: true, force: true}, test: 'blackWhite'},
+                {type: 'resize', width: '{width}', height: '{height}', options: {fit: 'fill', background: {r: 255, g: 255, b: 255}}},
+                {type: 'png', options: {colors: 2, force: true}},
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'image',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.png',
+                },
+                {type: 'colorspace', value: '{colorspace}', test: 'colorspace'},
+                {
+                    type: 'save',
+                    as: 'json5',
+                    file: '{pathPrepared}/{number}-{fileName}-{position}.json5',
+                    options: {colorspace: 'b-w', invert: false}
+                }
+            ]
+        }
+    },
+    swarm: {
+        image: 'ai-digit_2024_07_29_fagerbeg_tanh_2',
+        name: 'ai-digit_2024_07_29_fagerbeg_tanh_2_{id}',
+        jobPathName: 'jobs_2024_07_29_fagerbeg_tanh-2',
+        maxParallel: 4,
+        config: {
+            dimensions: [[16, 16], [32, 32]],
+            channels: ['red'],
+            colorspaces: ['b-w'],
+            blackWhites: [true],
+            hiddenLayers: [[512, 256, 128, 64], [1024, 512, 256, 128, 64]],
+            activations: ['tanh'],
+            momentums: [0.1],
+            errorThreshs: [0.0001, 0.001, 0.01, 0.1],
+            learningRates: [0.3, 0.05, 0.01],
+            iterations: [1000, 500],
             testFiles: [
                 '0-485-pos-1-1.json5',
                 '1-485-pos-1-2.json5',

@@ -39,7 +39,7 @@ export default async function ({input, output, overwrite}) {
     const csv = [
         [
             'Id', 'Timestamp',
-            'Width', 'Height', 'Channel', 'Colorspace',
+            'Width', 'Height', 'Channel', 'Colorspace', 'BlackWhite',
             'HiddenLayers', 'Activation',
             'Iterations', 'Momentum', 'ErrorThresh', 'LearningRate',
             '0 Weight', '0 Match',
@@ -63,6 +63,7 @@ export default async function ({input, output, overwrite}) {
             result.info.dimension[1].toLocaleString('de', {minimumFractionDigits: 0, maximumFractionDigits: 0}),
             String(result.info.channel),
             String(result.info.colorspace),
+            result.info.blackWhite ? 'Yes' : 'No',
 
             result.info.ai.config.hiddenLayers.join(', '),
             result.info.ai.config.activation,
