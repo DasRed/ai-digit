@@ -1,0 +1,523 @@
+{
+    "timestamp": "2024-07-29T20:57:20.157Z",
+    "info": {
+        "ai": {
+            "config": {
+                "hiddenLayers": [
+                    512,
+                    256,
+                    128,
+                    64
+                ],
+                "activation": "tanh"
+            },
+            "training": {
+                "iterations": 1000,
+                "errorThresh": 0.001,
+                "learningRate": 0.3,
+                "momentum": 0.1
+            }
+        },
+        "id": "32dc75c9bf897b1bfb1fb035b4b8b550",
+        "dimension": [
+            16,
+            16
+        ],
+        "channel": "red",
+        "colorspace": "b-w",
+        "blackWhite": true
+    },
+    "csv": "1;Y;1;N;1;N;1;N;1;N;1;N;0,9999996423721313;N;1;N;1;N;1;N",
+    "output": [
+        {
+            "success": true,
+            "should": 0,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/0-485-pos-1-1.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999997615814209
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 1,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/1-485-pos-1-2.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 0.9999999403953552
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999998807907104
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 2,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/2-564-pos-1-5.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999997019767761
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 3,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/3-1721815111887-1-pos-1-4.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999995827674866
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 4,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/4-564-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999995827674866
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 5,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/5-506-pos-2-2.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999995827674866
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 6,
+            "is": 0,
+            "weight": 0.9999996423721313,
+            "file": "/ai-digit/prepared/6-20240724081027-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999996423721313
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 7,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/7-485-pos-1-3.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999997019767761
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 8,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/8-1721815111887-1-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999995827674866
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 9,
+            "is": 0,
+            "weight": 1,
+            "file": "/ai-digit/prepared/9-1721815111887-105-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "0",
+                    "weight": 1
+                },
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 0.9999995827674866
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,523 @@
+{
+    "timestamp": "2024-07-29T22:07:49.563Z",
+    "info": {
+        "ai": {
+            "config": {
+                "hiddenLayers": [
+                    512,
+                    256,
+                    128,
+                    64
+                ],
+                "activation": "tanh"
+            },
+            "training": {
+                "iterations": 500,
+                "errorThresh": 0.001,
+                "learningRate": 0.3,
+                "momentum": 0.1
+            }
+        },
+        "id": "c0a729569014fab63f654e710b591351",
+        "dimension": [
+            16,
+            16
+        ],
+        "channel": "red",
+        "colorspace": "b-w",
+        "blackWhite": true
+    },
+    "csv": "-0,9999969005584717;N;1;Y;1;N;1;N;1;N;1;N;1;N;1;N;1;N;1;N",
+    "output": [
+        {
+            "success": false,
+            "should": 0,
+            "is": 1,
+            "weight": -0.9999969005584717,
+            "file": "/ai-digit/prepared/0-485-pos-1-1.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999969005584717
+                }
+            ]
+        },
+        {
+            "success": true,
+            "should": 1,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/1-485-pos-1-2.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999967217445374
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 2,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/2-564-pos-1-5.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999969005584717
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 3,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/3-1721815111887-1-pos-1-4.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999969005584717
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 4,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/4-564-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999967217445374
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 5,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/5-506-pos-2-2.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999971985816956
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 6,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/6-20240724081027-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.999997079372406
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 7,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/7-485-pos-1-3.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999968409538269
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 8,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/8-1721815111887-1-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999967813491821
+                }
+            ]
+        },
+        {
+            "success": false,
+            "should": 9,
+            "is": 1,
+            "weight": 1,
+            "file": "/ai-digit/prepared/9-1721815111887-105-pos-1-6.json5",
+            "result": [
+                {
+                    "number": "1",
+                    "weight": 1
+                },
+                {
+                    "number": "2",
+                    "weight": 1
+                },
+                {
+                    "number": "3",
+                    "weight": 1
+                },
+                {
+                    "number": "4",
+                    "weight": 1
+                },
+                {
+                    "number": "5",
+                    "weight": 1
+                },
+                {
+                    "number": "6",
+                    "weight": 1
+                },
+                {
+                    "number": "7",
+                    "weight": 1
+                },
+                {
+                    "number": "8",
+                    "weight": 1
+                },
+                {
+                    "number": "9",
+                    "weight": 1
+                },
+                {
+                    "number": "0",
+                    "weight": -0.9999966621398926
+                }
+            ]
+        }
+    ]
+}
