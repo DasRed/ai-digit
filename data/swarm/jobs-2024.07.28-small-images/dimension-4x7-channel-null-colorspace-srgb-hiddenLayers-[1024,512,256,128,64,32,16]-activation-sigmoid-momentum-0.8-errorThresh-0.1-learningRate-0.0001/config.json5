@@ -1,0 +1,44 @@
+
+    {
+        info: {
+    "id": "6c008658b64ddb665883b3617dc7144a",
+    "dimension": [
+        4,
+        7
+    ],
+    "channel": null,
+    "colorspace": "srgb"
+},
+        training: {
+            input: '/ai-digit/prepared/training.json',
+            output: '/ai-digit/dimension-4x7-channel-null-colorspace-srgb-hiddenLayers-[1024,512,256,128,64,32,16]-activation-sigmoid-momentum-0.8-errorThresh-0.1-learningRate-0.0001/brain.json',
+            ai: {
+                config: {
+                    hiddenLayers: [1024,512,256,128,64,32,16],
+                    activation: 'sigmoid',
+                },
+                training: {
+                    iterations: 2000,
+                    errorThresh: 0.1,
+                    learningRate: 0.0001,
+                    momentum: 0.8,
+                },
+            },
+        },
+        test: {
+            data: '/ai-digit/dimension-4x7-channel-null-colorspace-srgb-hiddenLayers-[1024,512,256,128,64,32,16]-activation-sigmoid-momentum-0.8-errorThresh-0.1-learningRate-0.0001/brain.json',
+            output: '/ai-digit/dimension-4x7-channel-null-colorspace-srgb-hiddenLayers-[1024,512,256,128,64,32,16]-activation-sigmoid-momentum-0.8-errorThresh-0.1-learningRate-0.0001/test.json',
+            inputs: [
+          "/ai-digit/prepared/0-485-pos-1-1.json5",
+          "/ai-digit/prepared/1-485-pos-1-2.json5",
+          "/ai-digit/prepared/2-564-pos-1-5.json5",
+          "/ai-digit/prepared/3-1721815111887-1-pos-1-4.json5",
+          "/ai-digit/prepared/4-564-pos-1-6.json5",
+          "/ai-digit/prepared/5-506-pos-2-2.json5",
+          "/ai-digit/prepared/6-20240724081027-pos-1-6.json5",
+          "/ai-digit/prepared/7-485-pos-1-3.json5",
+          "/ai-digit/prepared/8-1721815111887-1-pos-1-6.json5",
+          "/ai-digit/prepared/9-1721815111887-105-pos-1-6.json5"
+]
+        },
+    }
